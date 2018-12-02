@@ -8,6 +8,8 @@ const querystring = require('querystring');
 const readFile = promisify(fs.readFile)
 
 async function scrapeManchester() {
+
+
   const data = await readFile('./weeklyListResults.do.html', 'utf8')
 
   let results = []
@@ -28,13 +30,15 @@ async function scrapeManchester() {
   for(let i = 0; i < results.length; i++) {
     const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?${querystring.stringify({
       address: results[i].address,
-      key: config.geocodingAPIKey,
+      key: 'no' //config.geocodingAPIKey,
     })}`)
     const location = await response.json()
-// console.log(location)
+    results[i].geocodeStatus = location.status
+
     if(location.status === 'OK') {
       console.log('geocoded: ', location.results[0].formatted_address)
-      results[i].geometry = location.results[0].geometry
+      results[i].lat = location.results[0].geometry.location.lat;
+      results[i].lng = location.results[0].geometry.location.lng;
     } else {
       console.error('Geocode failure:', location)
     }
