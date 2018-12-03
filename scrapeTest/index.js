@@ -112,6 +112,11 @@ async function scrapeManchester() {
 
   // 4. Geocode all addresses
 
+  if(results.length > 500) {
+    console.error('Over 500 results to geocode. Has the scrape got carried away?')
+    return false;
+  }
+
   for(let i = 0; i < results.length; i++) {
     const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?${querystring.stringify({
       address: results[i].address,
