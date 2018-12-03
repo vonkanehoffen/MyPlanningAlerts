@@ -2,6 +2,8 @@
 
 ### Initial query:
 https://pa.manchester.gov.uk/online-applications/weeklyListResults.do?action=firstPage
+https://pa.manchester.gov.uk/online-applications/pagedSearchResults.do?action=page&searchCriteria.page=1
+https://pa.manchester.gov.uk/online-applications/pagedSearchResults.do?action=page&searchCriteria.page=6
 
 POST
 searchCriteria.ward: 

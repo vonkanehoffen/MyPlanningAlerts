@@ -7,47 +7,17 @@ const querystring = require('querystring');
 const cookie = require('cookie');
 const { URLSearchParams } = require('url');
 
-// const readFile = promisify(fs.readFile)
+const readFile = promisify(fs.readFile)
 
-const urlRoot = 'https://pa.manchester.gov.uk'
-
-async function scrapeManchester() {
-
-  // 1. Get latest week
-  const searchForm = await fetch(`${urlRoot}/online-applications/search.do?action=weeklyList&searchType=Application`, {
-    headers: {
-      'User-Agent': config.userAgent,
-    }
-  })
-
-  const searchFormText = await searchForm.text()
-  const $searchForm = cheerio.load(searchFormText)
-  const latestDate = $searchForm('select#week option').first().attr('value')
-  const cookies = cookie.parse(searchForm.headers.get('set-cookie'))
-  console.log(latestDate, cookies)
-
-  // 2. Get page 1
-  const params = new URLSearchParams();
-
-  params.append('searchCriteria.ward', '');
-  params.append('week', latestDate);
-  params.append('dateType', 'DC_Validated');
-  params.append('searchType', 'Application');
-
-  const firstPage = await fetch(`${urlRoot}${$searchForm('form#weeklyListForm').attr('action')}`, {
-    method: 'POST',
-    headers: {
-      'User-Agent': config.userAgent,
-      'Cookie': cookie.serialize('JSESSIONID', cookies.JSESSIONID),
-    },
-    body: params,
-  })
-  const firstPageText = await firstPage.text()
-
-  // 3. Scrape data from results into object
-
+/**
+ * Scrape data from single page HTML result.
+ * eg. https://pa.manchester.gov.uk/online-applications/weeklyListResults.do?action=firstPage
+ *  or https://pa.manchester.gov.uk/online-applications/pagedSearchResults.do?action=page&searchCriteria.page=2
+ * @param $ - cheerio'd DOM
+ * @returns {Array}
+ */
+function getPageData($) {
   let results = []
-  const $ = cheerio.load(firstPageText)
   $('#searchresults .searchresult').each((i, r) => {
     const item = {
       title: $(r).find('a').first().text().trim(),
@@ -60,6 +30,85 @@ async function scrapeManchester() {
     }
     results.push(item)
   })
+  return results
+}
+
+async function scrapeManchester() {
+
+  // 1. Get latest week
+
+  const searchForm = await fetch(
+    'https://pa.manchester.gov.uk/online-applications/search.do?action=weeklyList&searchType=Application', {
+      headers: {
+        'User-Agent': config.userAgent,
+      }
+    })
+
+  const $searchForm = cheerio.load(await searchForm.text())
+  const latestDate = $searchForm('select#week option').first().attr('value')
+  const cookies = cookie.parse(searchForm.headers.get('set-cookie'))
+  console.log("GOT LATEST DATE: ", latestDate, "COOOKIES: ", cookies)
+
+  // 2. Get page 1
+
+  const params = new URLSearchParams();
+
+  params.append('searchCriteria.ward', '');
+  params.append('week', latestDate);
+  // params.append('week', '26 Nov 2018');
+  params.append('dateType', 'DC_Validated');
+  params.append('searchType', 'Application');
+
+  const firstPage = await fetch(
+    'https://pa.manchester.gov.uk/online-applications/weeklyListResults.do?action=firstPage',
+    {
+      method: 'POST',
+      headers: {
+        'User-Agent': config.userAgent,
+        'Cookie': cookie.serialize('JSESSIONID', cookies.JSESSIONID),
+      },
+      body: params,
+    })
+
+  // Testing...
+  // const firstPageText = await readFile('./input/weeklyListResults-firstPage.do.html', 'utf8')
+
+  // Parse page and get page count
+  const $firstPageText = cheerio.load(await firstPage.text())
+  const pageCount = parseInt($firstPageText('.pager .page').last().text())
+
+  // Protect against things getting wild and DOSing the council...
+  if(pageCount > 30) {
+    console.error(`Page count is ${pageCount}. Parsing problem?`)
+    return false
+  }
+  console.log("PAGE COUNT: ", pageCount)
+
+  // 3. Scrape data from results into object
+
+  let results = getPageData($firstPageText)
+
+  // Iterate over subsequent pages
+
+  if(pageCount > 1) {
+    let pagedSearchResults;
+
+    for(let i = 2; i < pageCount + 1; i++) {
+      console.log(`GETTING PAGE ${i}...`)
+      pagedSearchResults = await fetch(
+        `https://pa.manchester.gov.uk/online-applications/pagedSearchResults.do?action=page&searchCriteria.page=${i}`,
+        {
+          headers: {
+            'User-Agent': config.userAgent,
+            'Cookie': cookie.serialize('JSESSIONID', cookies.JSESSIONID),
+          },
+        })
+
+      results = [...results, ...getPageData(cheerio.load(await pagedSearchResults.text()))]
+
+    }
+
+  }
 
   // 4. Geocode all addresses
 
@@ -84,5 +133,5 @@ async function scrapeManchester() {
 }
 
 // scrapeManchester()
-scrapeManchester().then(r => console.log(r))
+scrapeManchester().then(r => console.log('FINAL OUTPUT: ', JSON.stringify(r)))
 
