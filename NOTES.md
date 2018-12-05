@@ -16,4 +16,12 @@ https://pa.manchester.gov.uk/online-applications/pagedSearchResults.do?action=pa
 GET
 Cookie: JSESSIONID=l4SFyYwm26UQrOFGO6eEJky2x0DuspXWIA75Euw9.shpdmzm003; T9jAZCs6Brr4ceIj=epjbhh144ua7eqbghk8ddn4hpm30e914s07sg9nj6vjlnc5p8ht0; TestCookie=Test; _ga=GA1.3.1402407480.1543658798; _gid=GA1.3.1704530754.1543658798
 
+https://github.com/invertase/react-native-firebase-starter/issues/35
 
+---------------------------------------------------------
+Set project parameters to:
+---------------------------------------------------------
+Project name:  MyPlanningAlerts
+Company name:  kanec
+Package name:  com.kanec.myplanningalerts
+---------------------------------------------------------
