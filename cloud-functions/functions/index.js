@@ -1,5 +1,6 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const scrapeManchester = require('./scrapers/manchester').default
 
 admin.initializeApp(functions.config().firebase);
 
@@ -10,13 +11,12 @@ db.settings({ timestampsInSnapshots: true })
 // Take the text parameter passed to this HTTP endpoint and insert it into the
 // Realtime Database under the path /messages/:pushId/original
 exports.runPlanningScrape = functions.https.onRequest(async (req, res) => {
-  const docRef = db.collection('planningApps').doc('alovelace');
+  const docRef = db.collection('planningApps').doc('manc');
 
+  const mancData = await scrapeManchester()
   const dbRes = await docRef.set({
-    first: 'Ada Again',
-    last: 'Lovelace',
-    born: 1815
+    scrape: mancData,
   });
-  res.send({stuff: 'this is the stuff', dbRes})
+  res.send({dbRes})
   return null
 });
