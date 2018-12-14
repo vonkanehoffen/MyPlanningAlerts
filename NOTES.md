@@ -25,3 +25,16 @@ Project name:  MyPlanningAlerts
 Company name:  kanec
 Package name:  com.kanec.myplanningalerts
 ---------------------------------------------------------
+
+## Firebase Function...
+
+### Cron jobs
+Via an external cron trigger service:
+https://github.com/firebase/functions-samples/tree/master/delete-unused-accounts-cron
+like:
+https://www.easycron.com/
+
+### Push notifications
+https://medium.com/yale-sandbox/react-native-push-notifications-with-firebase-cloud-functions-74b832d45386
+https://medium.com/@anum.amin/react-native-integrating-push-notifications-using-fcm-349fff071591
+
