@@ -38,3 +38,7 @@ https://www.easycron.com/
 https://medium.com/yale-sandbox/react-native-push-notifications-with-firebase-cloud-functions-74b832d45386
 https://medium.com/@anum.amin/react-native-integrating-push-notifications-using-fcm-349fff071591
 
+...can't make outbound networking without paying though....
+
+So service account.
+Note: Seems to need full "Owner" permission not just "Firestore Editor" to work?
