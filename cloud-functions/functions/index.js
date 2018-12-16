@@ -8,9 +8,10 @@ db.settings({ timestampsInSnapshots: true })
 
 exports.notifyNewPlanningApps = functions.firestore
   .document('planningApps/{ref}')
-  .onSet((change, context) => {
-    const newValue = change.after.data();
+  .onCreate((snap, context) => {
+    const newValue = snap.data();
     console.log(`Triggered on firebase. New data: ${JSON.stringify(newValue, null, 2)}`)
+    return true
   });
 
 
@@ -19,4 +20,5 @@ exports.notifyUpdatedPlanningApps = functions.firestore
   .onUpdate((change, context) => {
     const newValue = change.after.data();
     console.log(`Triggered on firebase. New data: ${JSON.stringify(newValue, null, 2)}`)
+    return true
   });
