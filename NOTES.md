@@ -28,6 +28,11 @@ Package name:  com.kanec.myplanningalerts
 
 ## Firebase Function...
 
+Deploy like:
+```
+firebase deploy --only functions
+```
+
 ### Cron jobs
 Via an external cron trigger service:
 https://github.com/firebase/functions-samples/tree/master/delete-unused-accounts-cron
