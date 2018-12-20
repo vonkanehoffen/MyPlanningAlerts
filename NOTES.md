@@ -152,4 +152,7 @@ Try following:
 https://codeburst.io/react-native-google-map-with-react-native-maps-572e3d3eee14
 ?
 
+Oh god
+https://github.com/react-native-community/react-native-maps/issues/249
+
 
