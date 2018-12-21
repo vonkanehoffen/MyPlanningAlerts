@@ -156,3 +156,7 @@ Oh god
 https://github.com/react-native-community/react-native-maps/issues/249
 
 
+# Android dev menu without shake:
+```
+adb shell input keyevent KEYCODE_MENU && adb shell input keyevent ENTER && adb shell input keyevent ENTER
+```
