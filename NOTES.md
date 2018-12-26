@@ -160,3 +160,13 @@ https://github.com/react-native-community/react-native-maps/issues/249
 ```
 adb shell input keyevent KEYCODE_MENU && adb shell input keyevent ENTER && adb shell input keyevent ENTER
 ```
+
+
+## Notifications:
+
+https://rnfirebase.io/docs/v5.x.x/notifications/introduction
+....sending via https://console.firebase.google.com/u/0/project/my-planning-alerts/notification just works out of the box!
+
+
+# Other Local authorities:
+https://publicaccess.trafford.gov.uk/online-applications/search.do?action=weeklyList
