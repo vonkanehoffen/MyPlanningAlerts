@@ -170,3 +170,5 @@ https://rnfirebase.io/docs/v5.x.x/notifications/introduction
 
 # Other Local authorities:
 https://publicaccess.trafford.gov.uk/online-applications/search.do?action=weeklyList
+
+TODO: Sort warning on iOS: https://github.com/facebook/react-native/issues/16376
