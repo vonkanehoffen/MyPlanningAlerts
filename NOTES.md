@@ -172,3 +172,23 @@ https://rnfirebase.io/docs/v5.x.x/notifications/introduction
 https://publicaccess.trafford.gov.uk/online-applications/search.do?action=weeklyList
 
 TODO: Sort warning on iOS: https://github.com/facebook/react-native/issues/16376
+
+
+# Geosearch / location
+
+Geohashing, something like:
+https://firebase.googleblog.com/2014/06/geofire-20.html
+https://github.com/firebase/geofire-js/blob/master/docs/reference.md
+
+This explains concept:
+https://www.youtube.com/watch?v=lO1S-FAcZU8
+
+Firestore:
+https://stackoverflow.com/questions/46630507/how-to-run-a-geo-nearby-query-with-firestore
+
+Aha. This is what we need:
+https://github.com/geofirestore/geofirestore-js#example-usage
+(use on both scraper and app)
+
+Uses geohash and ....
+https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/GeoPoint
