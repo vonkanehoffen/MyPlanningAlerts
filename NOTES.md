@@ -192,3 +192,12 @@ https://github.com/geofirestore/geofirestore-js#example-usage
 
 Uses geohash and ....
 https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/GeoPoint
+
+
+# Android dev bridge problems:
+https://github.com/facebook/react-native/issues/15388
+
+```
+adb reverse --list # There should be one entry...
+adb reverse tcp:8081 tcp:8081
+```
