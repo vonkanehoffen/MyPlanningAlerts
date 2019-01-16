@@ -201,3 +201,6 @@ https://github.com/facebook/react-native/issues/15388
 adb reverse --list # There should be one entry...
 adb reverse tcp:8081 tcp:8081
 ```
+
+# Animation
+https://blog.nativebase.io/butter-smooth-scrolling-animations-in-react-native-49edbba6a38a
