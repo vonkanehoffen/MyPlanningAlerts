@@ -202,5 +202,14 @@ adb reverse --list # There should be one entry...
 adb reverse tcp:8081 tcp:8081
 ```
 
+# Debugging
+
+Use [react-native-debugger](https://github.com/jhen0409/react-native-debugger/)
+```
+open "rndebugger://set-debugger-loc?host=localhost&port=8081"
+```
+
+...rn-firebase doesn't work with standard remote js debugging
+
 # Animation
 https://blog.nativebase.io/butter-smooth-scrolling-animations-in-react-native-49edbba6a38a
